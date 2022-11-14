@@ -77,7 +77,7 @@ pip install -t lib -r requirements.txt
 We now need to zip it up.
 
 ```bash
-(cd lib; zip ../lambda_function.zip -r .)
+D:; cd side_project/text-parse-api/lib; zip ../lambda_function.zip -r .; cd ..; zip lambda_function.zip -u main.py; zip lambda_function.zip -u books.json
 ```
 
 Now add our FastAPI file and the JSON file.
