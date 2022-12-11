@@ -1,3 +1,4 @@
 fastapi
 uvicorn
 mangum
+tensorflow==2.9.2
