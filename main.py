@@ -7,7 +7,7 @@ import random
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from mangum import Mangum
-import keras
+from keras.models import load_model
 
 
 model = load_model(os.path.join('best_model.hdf5'))
