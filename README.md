@@ -80,3 +80,13 @@ We now need to zip it up.
 inside the repo
 zip ../lambda_function.zip -r .; cd ..; zip lambda_function.zip -u main.py; zip lambda_function.zip -u books.json
 ```
+
+
+Open EC2
+- cd text-parse-api
+- configuration (only once)
+    - vim .fastapi_nginx
+    - sudo vim /etc/nginx/sites-enabled/fastapi_nginx
+    - sudo service nginx restart
+- screen -d -m python3 -m uvicorn main:app (https://dev.to/akhileshthite/how-to-keep-ec2-instance-running-after-ssh-is-terminated-45k8)
+- http://18.177.210.30/https://i.ibb.co/4TBVthJ/7p8.png
