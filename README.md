@@ -89,4 +89,8 @@ Open EC2
     - sudo vim /etc/nginx/sites-enabled/fastapi_nginx
     - sudo service nginx restart
 - screen -d -m python3 -m uvicorn main:app (https://dev.to/akhileshthite/how-to-keep-ec2-instance-running-after-ssh-is-terminated-45k8)
-- http://18.177.210.30/https://i.ibb.co/4TBVthJ/7p8.png
+- screen -r to reconnect
+- http://18.177.210.30/https://i.ibb.co/jLkH4wT/1p8.png
+
+
+
