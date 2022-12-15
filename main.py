@@ -13,7 +13,7 @@ import io
 import cv2
 import numpy as np
 from PIL import Image
-
+import base64
 
 LOADED_MODEL = load_model(os.path.join('best_model.hdf5'))
 print(LOADED_MODEL.summary())
@@ -38,7 +38,7 @@ async def root():
 
 
 def image_prediction(my_image):
-    img_inv = ~my_image
+    img_inv = 255 - my_image
     _, thresh = cv2.threshold(img_inv, 127, 255, cv2.THRESH_BINARY)
     contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -128,21 +128,22 @@ def image_prediction(my_image):
     return s
 
 
-def text_parse_from_url(my_url):
-    response = requests.get(my_url)
-    bytes_im = io.BytesIO(response.content)
-    cv_im = cv2.cvtColor(np.array(Image.open(bytes_im)), cv2.COLOR_RGB2BGR)
-    cv_im = cv2.cvtColor(cv_im, cv2.COLOR_BGR2GRAY)
+def text_parse_from_base64_img(base64_text_input):
+    b64_string = base64_text_input.split(',')[-1]
+    decoded_text = base64.b64decode(b64_string)
+    cv_im_raw = imread(io.BytesIO(decoded_text))
+    cv_im = np.zeros((cv_im_raw.shape[0], cv_im_raw.shape[1]))
+    cv_im = 255 - cv_im_raw[:, :, 3]
+    cv_im = np.clip(cv_im, 0, 255).astype('uint8')
     parsed_text = image_prediction(cv_im)
     return parsed_text, eval(parsed_text)
-
 
 
 @app.get('/{full_path:path}')
 def predict_image(full_path: str):
     print('input full path is : ', full_path)
     try:
-        parsed_text, eval_text = text_parse_from_url(full_path)
+        parsed_text, eval_text = text_parse_from_base64_img(full_path)
         displayed_text = f'{parsed_text} = {eval_text}'
         return {'result': displayed_text}
     except Exception as e:
