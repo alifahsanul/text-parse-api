@@ -3,3 +3,4 @@ lib
 *.zip
 *.hdf5
 math-wizard
+*secret*

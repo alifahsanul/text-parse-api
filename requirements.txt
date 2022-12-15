@@ -2,3 +2,5 @@ fastapi
 uvicorn
 mangum
 tensorflow==2.9.2
+boto3
+imageio
